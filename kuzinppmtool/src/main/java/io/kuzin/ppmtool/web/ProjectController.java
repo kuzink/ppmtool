@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 
 @RestController
@@ -23,10 +22,8 @@ public class ProjectController {
 
     @PostMapping("")
     public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result){
-
         ResponseEntity<?> errorMap = validationService.validate(result);
         if(errorMap != null) return errorMap;
-
         Project project1 = projectService.saveOrUpdateProject(project);
         return new ResponseEntity<>(project1, HttpStatus.CREATED);
     }
@@ -35,6 +32,11 @@ public class ProjectController {
     public ResponseEntity<?> getByProjectId(@PathVariable String projectId){
         Project project = projectService.findProjectByIdentifier(projectId);
         return new ResponseEntity<>(project, HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    public Iterable<Project> getAllProject(){
+        return projectService.findAllProjects();
     }
 
 }
