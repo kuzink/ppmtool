@@ -41,9 +41,6 @@ public class Project {
     private Backlog backlog;
 
 
-    public Project() {
-    }
-
     public Long getId() {
         return id;
     }

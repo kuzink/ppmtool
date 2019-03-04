@@ -1,5 +1,6 @@
 package io.kuzin.ppmtool.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -29,18 +30,18 @@ public class ProjectTask {
     @Column(updatable = false)
     private String projectIdentifier;
 
+    @JsonFormat(pattern = "yyyy-mm-dd")
+    @Column(updatable = false)
+    private Date created_At;
+
+    @JsonFormat(pattern = "yyyy-mm-dd")
+    private Date updated_At;
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "backlog_id", updatable = false, nullable = false)
     @JsonIgnore
     private Backlog backlog;
 
-    private Date created_At;
-
-    private Date updated_At;
-
-
-    public ProjectTask() {
-    }
 
     public Long getId() {
         return id;
