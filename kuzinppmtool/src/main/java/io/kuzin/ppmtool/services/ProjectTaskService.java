@@ -36,7 +36,7 @@ public class ProjectTaskService {
             projectTask.setProjectSequence(projectIdentifier + "-" + backlogSequence);
             projectTask.setProjectIdentifier(projectIdentifier);
 
-            if(projectTask.getStatus().equals("") || projectTask.getStatus() == null){
+            if(projectTask.getStatus() == "" || projectTask.getStatus() == null){
                 projectTask.setStatus("TO_DO");
             }
             if(projectTask.getPriority() == null){
@@ -58,5 +58,11 @@ public class ProjectTaskService {
         }
 
         return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
+    }
+
+    public ProjectTask findPTByProjectSequence(String backlog_id, String pt_id) {
+
+
+        return projectTaskRepository.findByProjectSequence(pt_id);
     }
 }
