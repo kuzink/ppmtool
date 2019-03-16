@@ -2,9 +2,11 @@ package io.kuzin.ppmtool.services;
 
 import io.kuzin.ppmtool.domain.Backlog;
 import io.kuzin.ppmtool.domain.Project;
+import io.kuzin.ppmtool.domain.User;
 import io.kuzin.ppmtool.exceptions.ProjectIdException;
 import io.kuzin.ppmtool.repositories.BacklogRepository;
 import io.kuzin.ppmtool.repositories.ProjectRepository;
+import io.kuzin.ppmtool.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +19,15 @@ public class ProjectService {
     @Autowired
     private BacklogRepository backlogRepository;
 
-    public Project saveOrUpdateProject(Project project){
+    @Autowired
+    private UserRepository userRepository;
+
+    public Project saveOrUpdateProject(Project project, String username){
         try {
+            User user = userRepository.findByUsername(username);
+
+            project.setUser(user);
+            project.setProjectLeader(user.getUsername());
             project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
 
             if(project.getId() == null){
