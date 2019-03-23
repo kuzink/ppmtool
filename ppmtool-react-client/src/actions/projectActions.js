@@ -23,6 +23,10 @@ export const getProjects = () => async dispatch => {
     type: GET_PROJECTS,
     payload: res.data
   });
+  dispatch({
+    type: GET_ERRORS,
+    payload: {}
+  });
 };
 
 export const getProject = (id, history) => async dispatch => {
